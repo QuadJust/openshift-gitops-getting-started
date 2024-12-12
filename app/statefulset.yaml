@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: example
+spec:
+  serviceName: httpd
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpd
+  template:
+    metadata:
+      labels:
+        app: httpd
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: httpd
+          image: 'image-registry.openshift-image-registry.svc:5000/openshift/httpd:latest'
+          ports:
+            - containerPort: 8080
+              name: web
